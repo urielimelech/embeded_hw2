@@ -447,18 +447,20 @@ void cleanBar (char* bar){
 }
 
 //  ========================	Screens code		========================
-const int WORDS_AMOUNT=20;
-const int LETTERS_AMOUNT=30;
+
+#define WORDS_AMOUNT 20
+#define LETTERS_AMOUNT 30
 void DrawScreen(char items[WORDS_AMOUNT][LETTERS_AMOUNT], int type)
 {
-	word_indicator = 0;
-	letter_indicator = 0;
+	int i, j;
+	int word_indicator = 0;
+	int letter_indicator = 0;
 	//Type 0 - Main menu
 	if(type == 0)
 	{
-		for(int i=0;i<WORDS_AMOUNT;i++)
+		for(i=0;i<WORDS_AMOUNT;i++)
 		{
-			for(int j=0;j<LETTERS_AMOUNT;j++)
+			for(j=0;j<LETTERS_AMOUNT;j++)
 			{
 				if(items[i][j]=='0'){
 					return;
@@ -524,6 +526,7 @@ void main(void)
 	static char bmaString[6];		//temprature init
 
 	static char btn[2] = {0x7E, '\0'};				// button icon
+	char words[2][10];
 
     InitializeADCON0();
 	InitializeSystem();
@@ -534,8 +537,8 @@ void main(void)
 	maxResultX = 0;
 	minResultY = 0;
 	maxResultY = 0;
-	oledPutString (potMeter, 0, 6*6);
-	oledPutString (potBar, 1, 0);
+	//oledPutString (potMeter, 0, 6*6);
+	//oledPutString (potBar, 1, 0);
 	oledPutString (xBar, 3, 0);
 	oledPutString (yBar, 5, 0);
 	oledPutString (arrows, 7, 0);
@@ -563,9 +566,7 @@ void main(void)
 		}
 		ADCON0 = 0x11;
 
-		FillDisplay(0x00);
-
-		readA2D(0x13, potValues);				//read the potentiometer values
+		/*readA2D(0x13, potValues);				//read the potentiometer values
 		potValue = readTouch(0x13);
 		oledPutString(potValues, 0, 0*6);		//print "s" to the screen
 		barFill = potValue / 50;
@@ -576,7 +577,7 @@ void main(void)
 			potBar[forFill] = 0x26;
 			barFill--;
 		}
-		oledPutString (potBar, 1, 0);					// print pot meter bar
+		oledPutString (potBar, 1, 0);					// print pot meter bar*/
 
 		L = readTouch(0x0F);							//read if left is being touched
 		if (L < 680){
@@ -703,8 +704,8 @@ void main(void)
 				oledPutString(yBar, 5, 0*6);
 				}
 		}
-		char words[2][10]={{0},{0}};
-		sprintf("hello", "%s", words[0][0]);
+
+		sprintf(words[0][0], "%s", "hello\0");
 		DrawScreen(words,0);
     }
 }//end main
