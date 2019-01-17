@@ -3,7 +3,7 @@
  Dependencies: See INCLUDES section
  Processor:   PIC18 or PIC24 USB Microcontrollers
  Hardware:    The code is natively intended to be used on the following
-        hardware platforms: PICDEM™ FS USB Demo Board, 
+        hardware platforms: PICDEMï¿½ FS USB Demo Board, 
         PIC18F87J50 FS USB Plug-In Module, or
         Explorer 16 + PIC24 USB PIM.  The firmware may be
         modified for use on other USB platforms by editing the
@@ -14,8 +14,8 @@
  Software License Agreement:
 
  The software supplied herewith by Microchip Technology Incorporated
- (the “Company”) for its PIC® Microcontroller is intended and
- supplied to you, the Company’s customer, for use solely and
+ (the ï¿½Companyï¿½) for its PICï¿½ Microcontroller is intended and
+ supplied to you, the Companyï¿½s customer, for use solely and
  exclusively on Microchip PIC Microcontroller products. The
  software is owned by the Company and/or its supplier, and is
  protected under applicable copyright laws. All rights are reserved.
@@ -24,7 +24,7 @@
  civil liability for the breach of the terms and conditions of this
  license.
 
- THIS SOFTWARE IS PROVIDED IN AN “AS IS” CONDITION. NO WARRANTIES,
+ THIS SOFTWARE IS PROVIDED IN AN ï¿½AS ISï¿½ CONDITION. NO WARRANTIES,
  WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT NOT LIMITED
  TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
  PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. THE COMPANY SHALL NOT,
@@ -446,6 +446,30 @@ void cleanBar (char* bar){
 	bar[10] = 0x26;
 }
 
+//  ========================	Screens code		========================
+const int WORDS_AMOUNT=20;
+const int LETTERS_AMOUNT=30;
+void DrawScreen(char items[WORDS_AMOUNT][LETTERS_AMOUNT], int type)
+{
+	word_indicator = 0;
+	letter_indicator = 0;
+	//Type 0 - Main menu
+	if(type == 0)
+	{
+		for(int i=0;i<WORDS_AMOUNT;i++)
+		{
+			for(int j=0;j<LETTERS_AMOUNT;j++)
+			{
+				if(items[i][j]=='0'){
+					return;
+				}
+				oledPutString(items[i][j],1,10);
+				return;
+			}
+		}
+	}
+}
+
 //	========================	Application Code	========================
 
 
@@ -679,6 +703,9 @@ void main(void)
 				oledPutString(yBar, 5, 0*6);
 				}
 		}
+		char words[2][10]={{0},{0}};
+		sprintf("hello", "%s", words[0][0]);
+		DrawScreen(words,0);
     }
 }//end main
 
