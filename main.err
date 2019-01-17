@@ -1,0 +1,53 @@
+Warning[2058] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 359 : call of function without prototype
+Warning[2066] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 360 : type qualifier mismatch in assignment
+Warning[2052] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 362 : unexpected return value
+Warning[2058] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 421 : call of function without prototype
+Warning[2058] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 428 : call of function without prototype
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 513 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 514 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 515 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 516 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 517 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 518 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 519 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 520 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 530 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 536 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 556 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 565 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 570 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 574 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 579 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 583 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 591 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 598 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 604 : suspicious pointer conversion
+Warning[2066] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 611 : type qualifier mismatch in assignment
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 616 : suspicious pointer conversion
+Warning[2066] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 620 : type qualifier mismatch in assignment
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 622 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 629 : suspicious pointer conversion
+Warning[2066] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 632 : type qualifier mismatch in assignment
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 634 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 641 : suspicious pointer conversion
+Warning[2066] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 645 : type qualifier mismatch in assignment
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 647 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 654 : suspicious pointer conversion
+Warning[2066] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 657 : type qualifier mismatch in assignment
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 659 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 666 : suspicious pointer conversion
+Warning[2066] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 678 : type qualifier mismatch in assignment
+Warning[2066] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 679 : type qualifier mismatch in assignment
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 682 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 683 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 684 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 685 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 686 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 687 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 688 : suspicious pointer conversion
+Warning[2054] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 689 : suspicious pointer conversion
+Warning[2065] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 689 : static function 'YourLowPriorityISRCode' never referenced
+Warning[2065] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 689 : static function 'YourHighPriorityISRCode' never referenced
+Warning[2065] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 689 : static function 'YourLowPriorityISRCode' never referenced
+Warning[2065] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 689 : static function 'YourHighPriorityISRCode' never referenced
+Warning[2064] E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.c 689 : static function 'ProcessIO' not defined
