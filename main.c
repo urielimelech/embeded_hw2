@@ -538,19 +538,9 @@ void main(void)
 			BP = 0;
 		}
 		ADCON0 = 0x11;
-		/*checkPressing(&BP);
-		if(CheckButtonPressed()){
-			if(BP){
-				BP = FALSE;
-				oledWriteChar1x('0 ', 0, 1*6);
-				flag = TRUE;
-			}
-			if(!BP & !flag){
-				BP = TRUE;
-				oledWriteChar1x('1 ', 0, 1*6);
-			}
-			flag = FALSE;
-		}*/
+
+		FillDisplay(0x00);
+
 		readA2D(0x13, potValues);				//read the potentiometer values
 		potValue = readTouch(0x13);
 		oledPutString(potValues, 0, 0*6);		//print "s" to the screen

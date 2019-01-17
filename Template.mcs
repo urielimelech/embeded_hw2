@@ -2,7 +2,7 @@
 MagicCookie={0b13fe8c-dfe0-40eb-8900-6712719559a7}
 Version=1.0
 [File000]
-Location=E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\main.o
+Location=E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW2\main.o
 Folder=Intermediary
 DeviceName=PIC18F46J50
 LanguageToolSuiteID={5B7D72DD-9861-47BD-9F60-2BE967BF8416}
@@ -15,7 +15,7 @@ ToolArgsString=-Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
 TraceCmdString=
 DebugOptions=-D__DEBUG -D__MPLAB_DEBUGGER_SKDE=1
 [File001]
-Location=E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\oled.o
+Location=E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW2\oled.o
 Folder=Intermediary
 DeviceName=PIC18F46J50
 LanguageToolSuiteID={5B7D72DD-9861-47BD-9F60-2BE967BF8416}
@@ -28,7 +28,7 @@ ToolArgsString=-Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
 TraceCmdString=
 DebugOptions=-D__DEBUG -D__MPLAB_DEBUGGER_SKDE=1
 [File002]
-Location=E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\Template.cof
+Location=E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW2\Template.cof
 Folder=Output
 DeviceName=PIC18F46J50
 LanguageToolSuiteID={5B7D72DD-9861-47BD-9F60-2BE967BF8416}
@@ -41,7 +41,7 @@ ToolArgsString=/m"$(BINDIR_)$(TARGETBASE).map" /w /o"$(BINDIR_)$(TARGETBASE).cof
 TraceCmdString=
 DebugOptions=/z__MPLAB_DEBUG=1 /z__MPLAB_DEBUGGER_SKDE=1 /z__ICD2RAM=1
 [File003]
-Location=E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\Template.hex
+Location=E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW2\Template.hex
 Folder=Output
 DeviceName=PIC18F46J50
 LanguageToolSuiteID={5B7D72DD-9861-47BD-9F60-2BE967BF8416}
@@ -54,7 +54,7 @@ ToolArgsString=/m"$(BINDIR_)$(TARGETBASE).map" /w /o"$(BINDIR_)$(TARGETBASE).cof
 TraceCmdString=
 DebugOptions=/z__MPLAB_DEBUG=1 /z__MPLAB_DEBUGGER_SKDE=1 /z__ICD2RAM=1
 [File004]
-Location=E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW1\Template.map
+Location=E:\Programming\Third Year\Embeded Systems\Shenkar\LabHW2\Template.map
 Folder=Output
 DeviceName=PIC18F46J50
 LanguageToolSuiteID={5B7D72DD-9861-47BD-9F60-2BE967BF8416}
