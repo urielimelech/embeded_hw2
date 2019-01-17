@@ -450,9 +450,9 @@ void cleanBar (char* bar){
 
 void DrawScreen(int type)
 {
-	FillDisplay(0x00);
-	char phrase[20];
 	int i;
+	char phrase[20];
+	FillDisplay(0x00);
 	//Type 0 - Main menu
 	if(type == 0)
 	{	
