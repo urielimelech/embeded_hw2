@@ -448,27 +448,17 @@ void cleanBar (char* bar){
 
 //  ========================	Screens code		========================
 
-#define WORDS_AMOUNT 20
-#define LETTERS_AMOUNT 30
-void DrawScreen(char items[WORDS_AMOUNT][LETTERS_AMOUNT], int type)
+void DrawScreen(int type)
 {
-	int i, j;
-	int word_indicator = 0;
-	int letter_indicator = 0;
+	FillDisplay(0x00);
+	char phrase[20];
+	int i;
 	//Type 0 - Main menu
 	if(type == 0)
-	{
-		for(i=0;i<WORDS_AMOUNT;i++)
-		{
-			for(j=0;j<LETTERS_AMOUNT;j++)
-			{
-				if(items[i][j]=='0'){
-					return;
-				}
-				oledPutString(items[i][j],1,10);
-				return;
-			}
-		}
+	{	
+		sprintf(phrase,"%s","Hello");	
+		oledPutString(phrase,1,10);
+		return;	
 	}
 }
 
@@ -704,9 +694,7 @@ void main(void)
 				oledPutString(yBar, 5, 0*6);
 				}
 		}
-
-		sprintf(words[0][0], "%s", "hello\0");
-		DrawScreen(words,0);
+		DrawScreen(0);
     }
 }//end main
 
