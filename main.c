@@ -484,13 +484,13 @@ void main(void)
 {
 	
     InitializeADCON0();
-	InitializeSystem();
+	  InitializeSystem();
 	
     while(1)							//Main is Usualy an Endless Loop
     {
 		
     }
-	DrawScreen(0);
+	  DrawScreen(0);
 }//end main
 
 
