@@ -456,7 +456,7 @@ void DrawScreen(int type)
 	//Type 0 - Main menu
 	if(type == 0)
 	{	
-		sprintf(phrase,"%s","Hello");	
+		phrase="Hello\0"
 		oledPutString(phrase,1,10);
 		return;	
 	}
