@@ -448,7 +448,7 @@ void cleanBar (char* bar){
 
 //  ========================	Screens code		========================
 
-void DrawScreen(int type)
+/*void DrawScreen(int type)
 {
 	int i;
 	char phrase[20];
@@ -456,11 +456,11 @@ void DrawScreen(int type)
 	//Type 0 - Main menu
 	if(type == 0)
 	{	
-		phrase="Hello\0"
+		phrase="Hello\0";
 		oledPutString(phrase,1,10);
 		return;	
 	}
-}
+}*/
 
 //	========================	Application Code	========================
 
@@ -482,15 +482,20 @@ void DrawScreen(int type)
  *******************************************************************/
 void main(void)
 {
+	int potValue;
+	char MainHead[6] = {'h', 'e', 'l', 'l', 'o', '\0'};
+	char first[6] = {'f', 'i', 'r', 's', 't', '\0'};
+	char second[7] = {'s', 'e', 'c', 'o', 'n', 'd', '\0'};
+ 	InitializeADCON0();
+	InitializeSystem();
 	
-    InitializeADCON0();
-	  InitializeSystem();
-	
-    while(1)							//Main is Usualy an Endless Loop
-    {
-		
-    }
-	  DrawScreen(0);
+ 	while(1){							//Main is Usualy an Endless Loop
+		oledPutString(MainHead, 0,8*6);
+		oledPutString(first, 0,8*6);
+		oledPutString(second, 0,8*6);
+		WriteCommand(0xA8);
+		WriteCommand(readTouch(0x13));
+	}
 }//end main
 
 
