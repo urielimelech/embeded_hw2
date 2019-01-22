@@ -480,24 +480,372 @@ void cleanBar (char* bar){
  *
  * Note:            None
  *******************************************************************/
+
+void checkedLine(char* unCheck, char* Check){
+  unCheck[0] = ' ';
+  Check[0] = '>';
+}
+
+BOOL flag = TRUE, BP = TRUE;
+int pressed(int selection){
+  if (flag){
+    flag = FALSE;
+    BP = TRUE;
+  }
+  else if(!flag & !BP){
+    flag = TRUE;
+  }
+  BP = FALSE;
+  return selection;
+}
+
+static char MainHead[10] = {'M', 'a', 'i', 'n', ' ', 'M', 'e', 'n', 'u', '\0'};
+static char instruction_Touch[14] = {'U', 's', 'e', ' ', 'T', 'o', 'u', 'c', 'h', ' ', 'P', 'a', 'd', '\0'};
+static char instruction_Tilt[9]= {'U', 's', 'e', ' ', 'T', 'i', 'l', 't', '\0'};
+static char instruction_Pot[8]= {'U', 's', 'e', ' ', 'P', 'o', 't', '\0'};
+static char subHead[11] = {'S', 'u', 'b', ' ', 'M', 'e', 'n', 'u', ' ', '1', '\0'};
+static char st1[7] = {'>', 'F', 'i', 'r', 's', 't', '\0'};
+static char nd2[8] = {' ', 'S', 'e', 'c', 'o', 'n', 'd', '\0'};
+static char rd3[7] = {' ', 'T', 'h', 'i', 'r', 'd', '\0'};
+static char th4[6] = {' ', 'F', 'o', 'u', 'r', '\0'};
+static char ex[19] = {' ', 'E', 'x', 'e', 'c', 'u', 't', 'e', ' ', 'A', 'c', 't', 'i', 'o', 'n', ' ', '0', '1', '\0'};
+
+void mainMenu(void){                      //touch pad menu
+  oledPutString(MainHead, 0, 4*6);
+  oledPutString(instruction_Touch, 1, 3*6);
+  oledPutString(st1, 3, 0*6);
+  oledPutString(nd2, 3, 10*6);
+  oledPutString(rd3, 5, 0*6);
+  oledPutString(th4, 5, 10*6);
+}
+
+void pot_Menu(void){                    //pot menu
+  oledPutString(subHead, 0,4*6);
+  oledPutString(instruction_Pot, 1, 5*6);
+  oledPutString(st1, 2,0*6);
+  oledPutString(nd2, 3,0*6);
+  oledPutString(rd3, 4,0*6);
+  oledPutString(th4, 5,0*6);
+}
+
+void tilt_Menu(void){                   //tilt menu
+  static int i = 1, Offset = 1;
+  char c = '9';
+  oledPutString(subHead, 0,4*6);
+  oledPutString(instruction_Tilt, 1, 5*6);
+  if (i<7){
+    for (i = 1; i < 7; i++){
+    oledPutString(ex, Offset+i, 0*6);
+    if (ex[17] == c){
+      ex[16] = '1';
+      ex[17] = '0';
+      continue;
+    }
+    ex[17]++;
+    }
+    return;
+  }
+  else if (i < 14){
+    for (i = 9; i < 15; i++){
+      oledPutString(ex, Offset+i, 0*6);
+      if (ex[17] == c){
+        ex[16] = '1';
+        ex[17] = '0';
+        continue;
+      }
+      ex[17]++;
+    }
+    return;
+  }
+  else if (i < 21){
+    for (i = 16; i < 22; i++){
+      oledPutString(ex, Offset+i, 0*6);
+      if (ex[17] == c){
+        ex[16]++;
+        ex[17] = '0';
+        continue;
+      }
+      ex[17]++;
+    }
+    return;
+  }
+}
+
+/*void subsecond_menu(void){                //sub tilt menu
+  oledPutString(SubSecond, 0, 4*6); 
+  oledPutString(th11, 2,0*6);
+  oledPutString(th12, 2,10*6);
+  oledPutString(th13, 3,0*6);
+  oledPutString(th14, 3,10*6);
+  oledPutString(th15, 4,0*6);
+  oledPutString(th16, 4,10*6);
+}*/
+
+void menuPrinter(int menuNum){
+  FillDisplay(0x00);
+  switch (menuNum){
+    case 0:
+      mainMenu();
+      break;
+    case 1:
+      pot_Menu();
+      break;
+    case 2:
+      tilt_Menu();
+      break;
+    case 3:
+      //subsecond_menu();
+      break;
+  }
+}
+
+
 void main(void)
 {
-	int potValue;
-	char MainHead[6] = {'h', 'e', 'l', 'l', 'o', '\0'};
-	char first[6] = {'f', 'i', 'r', 's', 't', '\0'};
-	char second[7] = {'s', 'e', 'c', 'o', 'n', 'd', '\0'};
+  int selection_flag = 0;
+  int resultX, resultY, resultZ;
+	char x[5], y[5], z[5];
+  int selectMenu = 0, selection = 0, line = 0, potLastState = 0;
+  int functionallity;
+	int potValue, L, R, U, D;
+
  	InitializeADCON0();
 	InitializeSystem();
-	
+  mTouchInit();
+  mTouchCalibrate();
+  mainMenu();
+  functionallity = 0;
  	while(1){							//Main is Usualy an Endless Loop
-		oledPutString(MainHead, 0,8*6);
-		oledPutString(first, 0,8*6);
-		oledPutString(second, 0,8*6);
-		WriteCommand(0xA8);
-		WriteCommand(readTouch(0x13));
-	}
+    L = mTouchReadButton(3);							//read if left is being touched
+    R = mTouchReadButton(0);							//read if right is being touched
+    U = mTouchReadButton(1);              //read if up is being touched
+	  D = mTouchReadButton(2);              //read if down is being touched
+    ADCON0 = 0x11;
+    if (CheckButtonPressed()){
+      selectMenu = pressed(selection);
+    }
+    ADCON0 = 0x13;
+    switch (selectMenu){
+      case 0:
+        if (selection_flag != 0){
+          menuPrinter(selectMenu);
+          functionallity = 0;
+        }
+        selection_flag = 0;
+        break;
+      case 1:
+        if (selection_flag != 1){
+          menuPrinter(selectMenu);
+          functionallity = 1;
+        }
+        selection_flag = 1;
+        break;
+      case 2:
+        if (selection_flag != 2){
+          menuPrinter(selectMenu);
+          functionallity = 2;
+        }
+        selection_flag = 2;
+        break;
+      case 3:
+        //third_Menu();
+        break;
+      case 4:
+        //forth_Menu();
+        break;
+    }
+    if (functionallity == 0){                   // touchpad functionallity
+        switch (selection){                     // navigate in the menu
+          case 0:
+            if (L < 600){
+              selection = 1;  
+              break;
+            }    
+            else if (R < 600){
+              checkedLine(st1, nd2);
+              menuPrinter(selectMenu);
+              selection = 2;
+              break;
+            }
+            else if (D < 600){
+              checkedLine(st1, rd3);
+              menuPrinter(selectMenu);
+              selection = 3;
+              break;
+            }
+            else if (U < 600){
+              selection = 1;
+              break;
+            }
+          case 1:
+            if (L < 600){
+              selection = 1;
+              break;
+            }
+            else if (R < 600){
+              checkedLine(st1, nd2);
+              menuPrinter(selectMenu);
+              selection = 2;
+              break;
+            }
+            else if (D < 600){
+              checkedLine(st1, rd3);
+              menuPrinter(selectMenu);
+              selection = 3;
+              break;
+            }
+            else if (U < 600){
+              selection = 1;
+              break;
+            }
+          case 2:
+              if (L < 600){
+                checkedLine(nd2, st1);
+                menuPrinter(selectMenu);
+                selection = 1;
+                break;
+              }
+              else if (R < 600){
+                selection = 2;
+                break;
+              }
+              else if (U < 600){
+                selection = 2;
+                break;
+              }
+              else if (D < 600){
+                checkedLine(nd2, th4);
+                menuPrinter(selectMenu);
+                selection = 4;
+                break;
+              }
+          case 3:
+              if (L < 600){
+                selection = 3;
+                break;
+              }
+              else if (R < 600){
+                checkedLine(rd3, th4);
+                menuPrinter(selectMenu);
+                selection = 4;
+                break;
+              }
+              else if (U < 600){
+                checkedLine(rd3, st1);
+                menuPrinter(selectMenu);
+                selection = 1;
+                break;
+              }
+              else if (D < 600){
+                selection = 3;
+                break;
+              }
+          case 4:
+              if (L < 600){
+                checkedLine(th4, rd3);
+                menuPrinter(selectMenu);
+                selection = 3;
+                break;
+              }
+              else if (R < 600){
+                selection = 4;
+                break;
+              }
+              else if (U < 600){
+                checkedLine(th4, nd2);
+                menuPrinter(selectMenu);
+                selection = 2;
+                break;
+              }
+              else if (D < 600){
+                selection = 4;
+                break;
+              }
+        }
+    }
+    else if (functionallity == 1){
+        potValue = readTouch(0x13);
+        selection = potValue/256;
+        switch (selection){
+          case 0:
+            if (potLastState != selection){
+              switch (potLastState){
+                case 0:
+                  break;
+                case 1:
+                  checkedLine(nd2, st1);
+                  break;
+                case 2:
+                  checkedLine(rd3, st1);
+                  break;
+                case 3:
+                  checkedLine(th4, st1);
+                  break;
+              }
+              menuPrinter(selectMenu);
+            }
+            potLastState = selection;
+            break;
+          case 1:
+            if (potLastState != selection){
+              switch (potLastState){
+                case 0:
+                  checkedLine(st1, nd2);
+                  break;
+                case 1:
+                  break;
+                case 2:
+                  checkedLine(rd3, nd2);
+                  break;
+                case 3:
+                  checkedLine(th4, nd2);
+                  break;
+              }
+              menuPrinter(selectMenu);
+            }
+            potLastState = selection;
+            break;
+          case 2:
+            if (potLastState != selection){
+              switch (potLastState){
+                case 0:
+                  checkedLine(st1, rd3);
+                  break;
+                case 1:
+                  checkedLine(nd2, rd3);
+                  break;
+                case 2:
+                  break;
+                case 3:
+                  checkedLine(th4, rd3);
+                  break;
+              }
+              menuPrinter(selectMenu);
+            }
+            potLastState = selection;
+            break;
+          case 3:
+            if (potLastState != selection){
+              switch (potLastState){
+                case 0:
+                  checkedLine(st1, th4);
+                  break;
+                case 1:
+                  checkedLine(nd2, th4);
+                  break;
+                case 2:
+                  checkedLine(rd3, th4);
+                  break;
+                case 3:
+                  break;
+              }
+              menuPrinter(selectMenu);
+            }
+            potLastState = selection;
+            break;
+        }
+    }
+   } 
 }//end main
 
-
 /** EOF main.c *************************************************/
-//#endif
