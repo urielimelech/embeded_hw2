@@ -326,42 +326,6 @@ static void InitializeADCON0(void)
     #endif
 }
 
-void StringCleaner(int num, char* s){
-	if (num < 0){
-		if(num > -1000){
-			if(num > -100){
-				if(num > -10){
-					s[2] = ' ';
-				}
-				s[3] = ' ';
-			}
-			s[4] = ' ';
-		}
-		s[5] = '\0';		
-	}
-	else {
-		if (num < 1000){
-			if (num < 100){
-				if (num < 10){
-					s[1] = ' ';
-				}
-				s[2] = ' ';
-			}
-			s[3] = ' ';
-			s[4] = '\0';
-		}
-	}
-}
-
-void readA2D(BYTE channel, char* s)
-{
-	int a2d;
-	a2d = readTouch(channel);
-	sprintf(s, "%d", a2d);			//convert a2d into decimal number and put it in "s"
-	StringCleaner(a2d, s);
-	return a2d;
-}
-
 int readTouch(BYTE channel){
 	BYTE x;
 	int a2d;
@@ -436,16 +400,6 @@ int twosComp(int value){
 	return -value;
 }
 
-void cleanBar (char* bar){
-	int i;
-	bar[0] = 0x23;
-	for (i = 1; i < 20; i++){
-		bar[i] = 0x24;
-	}
-	bar[i] = 0x25;
-	bar[10] = 0x26;
-}
-
 //  ========================	Screens code		========================
 
 /*void DrawScreen(int type)
@@ -503,12 +457,20 @@ static char MainHead[10] = {'M', 'a', 'i', 'n', ' ', 'M', 'e', 'n', 'u', '\0'};
 static char instruction_Touch[14] = {'U', 's', 'e', ' ', 'T', 'o', 'u', 'c', 'h', ' ', 'P', 'a', 'd', '\0'};
 static char instruction_Tilt[9]= {'U', 's', 'e', ' ', 'T', 'i', 'l', 't', '\0'};
 static char instruction_Pot[8]= {'U', 's', 'e', ' ', 'P', 'o', 't', '\0'};
-static char subHead[11] = {'S', 'u', 'b', ' ', 'M', 'e', 'n', 'u', ' ', '1', '\0'};
+static char subHead[9] = {'S', 'u', 'b', ' ', 'M', 'e', 'n', 'u', '\0'};
+static char instruction_left_right[17] = {'U', 's', 'e', ' ', 'L', 'e', 'f', 't', ' ', '&', ' ', 'R', 'i', 'g', 'h', 't', '\0'};
 static char st1[7] = {'>', 'F', 'i', 'r', 's', 't', '\0'};
 static char nd2[8] = {' ', 'S', 'e', 'c', 'o', 'n', 'd', '\0'};
 static char rd3[7] = {' ', 'T', 'h', 'i', 'r', 'd', '\0'};
 static char th4[6] = {' ', 'F', 'o', 'u', 'r', '\0'};
-static char ex[19] = {' ', 'E', 'x', 'e', 'c', 'u', 't', 'e', ' ', 'A', 'c', 't', 'i', 'o', 'n', ' ', '0', '1', '\0'};
+static char long_ex[19] = {' ', 'E', 'x', 'e', 'c', 'u', 't', 'e', ' ', 'A', 'c', 't', 'i', 'o', 'n', ' ', '0', '1', '\0'};
+static char ex[5] = {'E', 'x', 'e', 'c', '\0'};
+static char exNum[2] = {'1','\0'};
+static char instruction_shake[18] = {'S','h','a','k','e',' ','M','e', ' ', 'T', 'o' ,' ','R','e','s','e','t','\0'};
+static char shake[10] = {'S','h','a','k','e',' ','N','o','w','\0'};
+static char shakeHard[13] = {'S','h','a','k','e',' ','H','a','r','d','e','r', '\0'};
+static char sub_sub_menu[13] = {'S','u','b',' ','S', 'u', 'b', ' ', 'M', 'e', 'n', 'u', '\0'};
+static char instruction_sub_sub[22] = {'J','u','s','t',' ','P','r','e','s','s',' ','T','h','e',' ','B','u','t','t','o','n','\0'};
 
 void mainMenu(void){                      //touch pad menu
   oledPutString(MainHead, 0, 4*6);
@@ -519,67 +481,59 @@ void mainMenu(void){                      //touch pad menu
   oledPutString(th4, 5, 10*6);
 }
 
-void pot_Menu(void){                    //pot menu
-  oledPutString(subHead, 0,4*6);
-  oledPutString(instruction_Pot, 1, 5*6);
+void tilt_Menu(void){                    //pot menu
+  oledPutString(subHead, 0,7*6);
+  oledPutString(instruction_Tilt, 1, 5*6);
   oledPutString(st1, 2,0*6);
   oledPutString(nd2, 3,0*6);
   oledPutString(rd3, 4,0*6);
   oledPutString(th4, 5,0*6);
 }
 
-void tilt_Menu(void){                   //tilt menu
+void pot_Menu(void){                   //tilt menu
   static int i = 1, Offset = 1;
   char c = '9';
-  oledPutString(subHead, 0,4*6);
-  oledPutString(instruction_Tilt, 1, 5*6);
-  if (i<7){
-    for (i = 1; i < 7; i++){
-    oledPutString(ex, Offset+i, 0*6);
-    if (ex[17] == c){
-      ex[16] = '1';
-      ex[17] = '0';
+  oledPutString(subHead, 0,7*6);
+  oledPutString(instruction_Pot, 1, 5*6);
+  for (i = 1; i < 7; i++){
+    oledPutString(long_ex, Offset+i, 0*6);
+    if (long_ex[17] == c){
+      long_ex[16] = '1';
+      long_ex[17] = '0';
       continue;
     }
-    ex[17]++;
-    }
-    return;
+    long_ex[17]++;
   }
-  else if (i < 14){
-    for (i = 9; i < 15; i++){
-      oledPutString(ex, Offset+i, 0*6);
-      if (ex[17] == c){
-        ex[16] = '1';
-        ex[17] = '0';
-        continue;
-      }
-      ex[17]++;
-    }
-    return;
-  }
-  else if (i < 21){
-    for (i = 16; i < 22; i++){
-      oledPutString(ex, Offset+i, 0*6);
-      if (ex[17] == c){
-        ex[16]++;
-        ex[17] = '0';
-        continue;
-      }
-      ex[17]++;
-    }
-    return;
-  }
+  return;
+}
+  
+void left_right_menu(void){                //sub tilt menu
+  oledPutString(subHead, 0, 7*6); 
+  oledPutString(instruction_left_right, 1, 2*6);
+  oledPutString(ex, 3, 0*6);
+  oledPutString(ex, 3, 5*6);
+  oledPutString(ex, 3, 10*6);
+  oledPutString(ex, 3, 15*6);
+  oledPutString(exNum, 5, 2*6);
+  exNum[0]++;
+  oledPutString(exNum, 5, 7*6);
+  exNum[0]++;
+  oledPutString(exNum, 5, 12*6);
+  exNum[0]++;
+  oledPutString(exNum, 5, 17*6);
+  exNum[0] = '1';
 }
 
-/*void subsecond_menu(void){                //sub tilt menu
-  oledPutString(SubSecond, 0, 4*6); 
-  oledPutString(th11, 2,0*6);
-  oledPutString(th12, 2,10*6);
-  oledPutString(th13, 3,0*6);
-  oledPutString(th14, 3,10*6);
-  oledPutString(th15, 4,0*6);
-  oledPutString(th16, 4,10*6);
-}*/
+void shake_menu(void){
+  oledPutString(subHead, 0, 7*6);
+  oledPutString(instruction_shake, 1, 2*6);
+  oledPutString(shake, 4, 6*6);
+}
+
+void subsub_menu(void){
+  oledPutString(sub_sub_menu, 0, 4*6);
+  oledPutString(instruction_sub_sub,1,0*6);
+}
 
 void menuPrinter(int menuNum){
   FillDisplay(0x00);
@@ -588,13 +542,19 @@ void menuPrinter(int menuNum){
       mainMenu();
       break;
     case 1:
-      pot_Menu();
-      break;
-    case 2:
       tilt_Menu();
       break;
+    case 2:
+      pot_Menu();
+      break;
     case 3:
-      //subsecond_menu();
+      left_right_menu();
+      break;
+    case 4:
+      shake_menu();
+      break;
+    case 5:
+      subsub_menu();
       break;
   }
 }
@@ -605,8 +565,8 @@ void main(void)
   int selection_flag = 0;
   int resultX, resultY, resultZ;
 	char x[5], y[5], z[5];
-  int selectMenu = 0, selection = 0, line = 0, potLastState = 0;
-  int functionallity;
+  int selectMenu = 0, selection = 0, line = 0, potLastState = 0, left_right_LastState = 0, tiltCounter = 0, tiltLastState = 0;
+  int functionallity = 0;
 	int potValue, L, R, U, D;
 
  	InitializeADCON0();
@@ -614,7 +574,7 @@ void main(void)
   mTouchInit();
   mTouchCalibrate();
   mainMenu();
-  functionallity = 0;
+  
  	while(1){							//Main is Usualy an Endless Loop
     L = mTouchReadButton(3);							//read if left is being touched
     R = mTouchReadButton(0);							//read if right is being touched
@@ -626,32 +586,47 @@ void main(void)
     }
     ADCON0 = 0x13;
     switch (selectMenu){
-      case 0:
+      case 0:                                  //main menu
         if (selection_flag != 0){
           menuPrinter(selectMenu);
           functionallity = 0;
         }
         selection_flag = 0;
         break;
-      case 1:
+      case 1:                                   //tilt menu
         if (selection_flag != 1){
           menuPrinter(selectMenu);
           functionallity = 1;
         }
         selection_flag = 1;
         break;
-      case 2:
+      case 2:                                   //pot menu
         if (selection_flag != 2){
           menuPrinter(selectMenu);
           functionallity = 2;
         }
         selection_flag = 2;
         break;
-      case 3:
-        //third_Menu();
+      case 3:                                   //left right menu
+        if (selection_flag != 3){
+          menuPrinter(selectMenu);
+          functionallity = 3;
+        }
+        selection_flag = 3;
         break;
       case 4:
-        //forth_Menu();
+        if (selection_flag != 4){                 //forth_Menu();
+          menuPrinter(selectMenu);
+          functionallity = 4;
+        }
+        selection_flag = 4;
+        break;
+      case 5:
+        if (selection_flag != 5){                 // press to reset
+          menuPrinter(selectMenu);
+          functionallity = 5;
+        }
+        selection_flag = 5;
         break;
     }
     if (functionallity == 0){                   // touchpad functionallity
@@ -763,87 +738,282 @@ void main(void)
               }
         }
     }
-    else if (functionallity == 1){
-        potValue = readTouch(0x13);
-        selection = potValue/256;
-        switch (selection){
+    else if (functionallity == 1){              // tilt functionallity
+      resultX = readAcc(0x03);
+      if (resultX > 10){
+        while (resultX > 2)
+          resultX = readAcc(0x03);
+        tiltCounter++;
+      }
+      else if (resultX < -10){
+        while (resultX < -2)
+          resultX = readAcc(0x03);
+        tiltCounter--;
+      }
+      if (tiltCounter < 0)
+        tiltCounter = 0;
+      if (tiltCounter > 4)
+        tiltCounter = 4;
+      if (tiltLastState != tiltCounter){
+        switch(tiltCounter){
           case 0:
-            if (potLastState != selection){
-              switch (potLastState){
-                case 0:
-                  break;
-                case 1:
-                  checkedLine(nd2, st1);
-                  break;
-                case 2:
-                  checkedLine(rd3, st1);
-                  break;
-                case 3:
-                  checkedLine(th4, st1);
-                  break;
-              }
-              menuPrinter(selectMenu);
-            }
-            potLastState = selection;
+            st1[0] = '>';
+            nd2[0] = ' ';
+            rd3[0] = ' ';
+            th4[0] = ' ';
+            menuPrinter(selectMenu);
+            selection = 0;
             break;
           case 1:
-            if (potLastState != selection){
-              switch (potLastState){
-                case 0:
-                  checkedLine(st1, nd2);
-                  break;
-                case 1:
-                  break;
-                case 2:
-                  checkedLine(rd3, nd2);
-                  break;
-                case 3:
-                  checkedLine(th4, nd2);
-                  break;
-              }
-              menuPrinter(selectMenu);
-            }
-            potLastState = selection;
+            st1[0] = ' ';
+            nd2[0] = '>';
+            rd3[0] = ' ';
+            th4[0] = ' ';
+            menuPrinter(selectMenu);
+            selection = 1;
             break;
           case 2:
-            if (potLastState != selection){
-              switch (potLastState){
-                case 0:
-                  checkedLine(st1, rd3);
-                  break;
-                case 1:
-                  checkedLine(nd2, rd3);
-                  break;
-                case 2:
-                  break;
-                case 3:
-                  checkedLine(th4, rd3);
-                  break;
-              }
-              menuPrinter(selectMenu);
-            }
-            potLastState = selection;
+            st1[0] = ' ';
+            nd2[0] = ' ';
+            rd3[0] = '>';
+            th4[0] = ' ';
+            menuPrinter(selectMenu);
+            selection = 2;
             break;
           case 3:
-            if (potLastState != selection){
-              switch (potLastState){
-                case 0:
-                  checkedLine(st1, th4);
-                  break;
-                case 1:
-                  checkedLine(nd2, th4);
-                  break;
-                case 2:
-                  checkedLine(rd3, th4);
-                  break;
-                case 3:
-                  break;
-              }
-              menuPrinter(selectMenu);
-            }
-            potLastState = selection;
+            st1[0] = ' ';
+            nd2[0] = ' ';
+            rd3[0] = ' ';
+            th4[0] = '>';
+            menuPrinter(selectMenu);
+            selection = 3;
             break;
         }
+      }
+      tiltLastState = tiltCounter;
+    }
+    else if (functionallity == 2){              // pot functionallity
+      potValue = readTouch(0x13);
+      selection = potValue/60;
+      if (potLastState != selection){
+        if (selection < 6){
+          long_ex[16] = '0';
+          long_ex[17] = '1';
+          menuPrinter(selectMenu);
+        }
+        else if ((6 <= selection) && (selection < 12)){
+          long_ex[16] = '0';
+          long_ex[17] = '7';
+          menuPrinter(selectMenu);
+        }
+        else{
+          long_ex[16] = '1';
+          long_ex[17] = '3';
+          menuPrinter(selectMenu);
+        }
+        potLastState = selection;
+      }
+      switch (potLastState){
+        case 0:
+          oledWriteChar1x('>', 0xB2, 0*6);
+          oledWriteChar1x(' ', 0xB3, 0*6);
+          selection = 0;
+          break;
+        case 1:
+          oledWriteChar1x('>', 0xB3, 0*6);
+          oledWriteChar1x(' ', 0xB2, 0*6);
+          oledWriteChar1x(' ', 0xB4, 0*6);
+          selection = 1;
+          break;
+        case 2:
+          oledWriteChar1x('>', 0xB4, 0*6);
+          oledWriteChar1x(' ', 0xB3, 0*6);
+          oledWriteChar1x(' ', 0xB5, 0*6);
+          selection = 2;
+          break;
+        case 3:
+          oledWriteChar1x('>', 0xB5, 0*6);
+          oledWriteChar1x(' ', 0xB4, 0*6);
+          oledWriteChar1x(' ', 0xB6, 0*6);
+          selection = 3;
+          break;
+        case 4:
+          oledWriteChar1x('>', 0xB6, 0*6);
+          oledWriteChar1x(' ', 0xB5, 0*6);
+          oledWriteChar1x(' ', 0xB7, 0*6);
+          selection = 4;
+          break;
+        case 5:
+          oledWriteChar1x('>', 0xB7, 0*6);
+          oledWriteChar1x(' ', 0xB6, 0*6);
+          selection = 5;
+          break;
+        case 6:
+          oledWriteChar1x('>', 0xB2, 0*6);
+          oledWriteChar1x(' ', 0xB7, 0*6);
+          break;
+        case 7:
+          oledWriteChar1x('>', 0xB3, 0*6);
+          oledWriteChar1x(' ', 0xB2, 0*6);
+          break;
+        case 8:
+          oledWriteChar1x('>', 0xB4, 0*6);
+          oledWriteChar1x(' ', 0xB3, 0*6);
+          oledWriteChar1x(' ', 0xB5, 0*6);
+          break;
+        case 9:
+          oledWriteChar1x('>', 0xB5, 0*6);
+          oledWriteChar1x(' ', 0xB4, 0*6);
+          oledWriteChar1x(' ', 0xB6, 0*6);
+          break;
+        case 10:
+          oledWriteChar1x('>', 0xB6, 0*6);
+          oledWriteChar1x(' ', 0xB5, 0*6);
+          oledWriteChar1x(' ', 0xB7, 0*6);
+          break;
+        case 11:
+          oledWriteChar1x('>', 0xB7, 0*6);
+          oledWriteChar1x(' ', 0xB6, 0*6);
+          break;
+        case 12:
+          oledWriteChar1x('>', 0xB2, 0*6);
+          oledWriteChar1x(' ', 0xB3, 0*6);
+          break;
+        case 13:
+          oledWriteChar1x('>', 0xB3, 0*6);
+          oledWriteChar1x(' ', 0xB2, 0*6);
+          oledWriteChar1x(' ', 0xB4, 0*6);
+          break;
+        case 14:
+          oledWriteChar1x('>', 0xB4, 0*6);
+          oledWriteChar1x(' ', 0xB3, 0*6);
+          oledWriteChar1x(' ', 0xB5, 0*6);
+          break;
+        case 15:
+          oledWriteChar1x('>', 0xB5, 0*6);
+          oledWriteChar1x(' ', 0xB4, 0*6);
+          oledWriteChar1x(' ', 0xB6, 0*6);
+          break;
+        case 16:
+          oledWriteChar1x('>', 0xB6, 0*6);
+          oledWriteChar1x(' ', 0xB5, 0*6);
+          oledWriteChar1x(' ', 0xB7, 0*6);
+          break;
+        case 17:
+          oledWriteChar1x('>', 0xB7, 0*6);
+          oledWriteChar1x(' ', 0xB6, 0*6);
+          break;
+        }
+    }
+    else if (functionallity == 3){               //left right functionallity
+      switch (selection){
+        case 0:
+          oledWriteChar1x('^', 0xB7, 2*6);
+          selection = 1;
+          left_right_LastState = 1;
+          break;
+        case 1:
+          if (left_right_LastState != selection){
+            if (L < 600){
+              while (L < 700)
+                L = mTouchReadButton(3);
+              selection = 4;
+              menuPrinter(selectMenu);
+              oledWriteChar1x(' ', 0xB7, 2*6);
+              oledWriteChar1x('^', 0xB7, 17*6);
+            }
+            else if (R < 600){
+              while (R < 700)
+                R = mTouchReadButton(0);
+              // move arrow to the right selection
+              selection = 2;
+              menuPrinter(selectMenu);
+              oledWriteChar1x(' ', 0xB7, 2*6);
+              oledWriteChar1x('^', 0xB7, 7*6);
+            }
+          }
+          break;
+        case 2:
+          if (left_right_LastState != selection){
+            if (L < 600){
+              while (L < 700)
+                L = mTouchReadButton(3);              
+              // move arrow to the left selection
+              menuPrinter(selectMenu);
+              oledWriteChar1x(' ', 0xB7, 7*6);
+              oledWriteChar1x('^', 0xB7, 2*6);
+              selection = 1;
+            }
+            else if (R < 600){
+              while (R < 700)
+                R = mTouchReadButton(0);
+              // move arrow to the right selection
+              selection = 3;
+              menuPrinter(selectMenu);
+              oledWriteChar1x(' ', 0xB7, 7*6);
+              oledWriteChar1x('^', 0xB7, 12*6);
+            }
+          }
+          break;
+        case 3:
+          if (left_right_LastState != selection){
+            if (L < 600){
+              while (L < 700)
+                L = mTouchReadButton(3);              
+              // move arrow to the left selection
+              menuPrinter(selectMenu);
+              selection = 2;
+              oledWriteChar1x(' ', 0xB7, 12*6);
+              oledWriteChar1x('^', 0xB7, 7*6);
+            }
+            else if (R < 600){
+              while (R < 700)
+                R = mTouchReadButton(0);
+              // move arrow to the right selection
+              selection = 4;
+              menuPrinter(selectMenu);
+              oledWriteChar1x(' ', 0xB7, 12*6);
+              oledWriteChar1x('^', 0xB7, 17*6);
+            }
+          }
+          break;
+        case 4:
+          if (left_right_LastState != selection){
+            if (L < 600){
+              while (L < 700)
+                L = mTouchReadButton(3);              
+              // move arrow to the left selection
+              menuPrinter(selectMenu);
+              selection = 3;
+              oledWriteChar1x(' ', 0xB7, 17*6);
+              oledWriteChar1x('^', 0xB7, 12*6);
+            }
+            else if (R < 600){
+              while (R < 700)
+                R = mTouchReadButton(0);
+              selection = 1;
+              menuPrinter(selectMenu);
+              oledWriteChar1x(' ', 0xB7, 17*6);
+              oledWriteChar1x('^', 0xB7, 2*6);
+            }
+          }
+          break;
+      }
+    }
+    else if (functionallity == 4){               //shake execute
+      resultY = readAcc(0x05);
+      if (resultY > 500)
+        selectMenu = 0;
+      if (resultY > 100 && resultY < 500)
+        oledPutString(shakeHard, 6, 5*6);
+    }
+    else if (functionallity == 5){                //push the button execute
+      ADCON0 = 0x11;
+      while (!CheckButtonPressed()){
+        selectMenu = 0;
+        selection = 0;
+      }
+      ADCON0 = 0x13;
     }
    } 
 }//end main
